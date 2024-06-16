@@ -1,0 +1,36 @@
+###############################################
+#
+# install alpine with docker in qemu x86_64
+#
+
+# Wait enough (forever) until a long-time boot
+set timeout -1
+
+expect "login:"
+send "root\r"
+
+expect "Password:"
+send "$env(ROOT_PASSWORD)\n"
+
+# add docker portainer
+
+expect "#"
+send "docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce\r"
+
+expect "#"
+send "docker ps\r"
+
+expect "#"
+send "docker run -d --restart=always -e EARNAPP_UUID='sdk-android-874692b7ac584e98b0bbd47ab0947120 ' --name tester-01 fazalfarhan01/earnapp:lite\r"
+
+expect "#"
+send "docker run -d --restart=always -e EARNAPP_UUID='sdk-android-4c8ef7a783c64868bd55c39cccb091cd ' --name tester-02 fazalfarhan01/earnapp:lite\r"
+
+expect "#"
+send "docker run -d --restart=always -e EARNAPP_UUID='sdk-android-a16f57e84b214a6cb2ecbf211867b445 ' --name tester-03 fazalfarhan01/earnapp:lite\r"
+
+expect "#"
+send "docker run -d --restart=always -e EARNAPP_UUID='sdk-android-8e254fd8a21641a7b958bed10cf39e44 ' --name tester-04 fazalfarhan01/earnapp:lite\r"
+
+expect "#"
+send "docker run -d --restart=always -e EARNAPP_UUID='sdk-android-ebdc891df9bf48d295f4565469ad212d ' --name tester-05 fazalfarhan01/earnapp:lite\r"
